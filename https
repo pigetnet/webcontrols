@@ -1,0 +1,6 @@
+/show/description "HTTPS only for restify"
+hostname=$(cat /etc/hostname)
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /user/config/webcontrols/webcontrols.key -out /user/config/webcontrols/webcontrols.crt -subj "/C=EN/ST=$hostname/L=$hostname/O=NO/CN=$hostname.local"
+chmod 400 /user/config/webcontrols/webcontrols.key
+chmod 400 /user/config/webcontrols/webcontrols.crt
+
