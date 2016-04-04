@@ -26,8 +26,6 @@ function getDirectories(srcpath) {
   });
 }
 
-
-
 function readConfig(){
 	var obj = JSON.parse(fs.readFileSync(config_dir + 'webcontrols.json', 'utf8'));
 	return obj;
@@ -121,7 +119,7 @@ if (port == 433){
 	url = "https://" + os.hostname() + ".local/";
 }
 else{
-	url = "https://" + os.hostname() + ".local" + port + "/";
+	url = "https://" + os.hostname() + ".local:" + port + "/";
 }
 
 notFoundError = { output:"Command not found, Docs at " + url, error:"Not Found", status:"404"};
@@ -134,6 +132,8 @@ var server = restify.createServer({
     key: fs.readFileSync(config_dir + 'webcontrols.key'),
 	});
 
+server.pre(restify.CORS());
+
 server.get('/:module/:command/:args/:password', commandArgs);
 server.head('/:module/:command/:args/:password', commandArgs);
 server.get('/:module/:command/:password', command);
@@ -141,10 +141,10 @@ server.head('/:module/:command/:password', command);
 //server.get('/:password', command);
 //server.get('/', command);
 
-
 //Enable restify web server
 server.listen(port, function() {
 	console.log(bootMessage);
 	console.log(config);
 	console.log(modules);
 });
+
