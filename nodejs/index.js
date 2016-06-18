@@ -65,13 +65,21 @@ function checkPassword(password, hashedPassword){
 }
 
 function command(req, res, next) {
-	bashCommand = dir + req.params.module + "/" + req.params.command;
+	console.log(req.params);
+	if (req.params.args == undefined){
+		args = ""
+	}
+	else
+	{
+		args = req.params.args
+	}
+	bashCommand = dir + req.params.module + "/" + req.params.command; 
 	checkPassword(req.params.password, hashedPassword);
 
 	if (check){
 		fs.stat(bashCommand, function(err, stat) {
 			if(err === null) {
-			 	start(bashCommand,res);
+			 	start(bashCommand + " " + args,res);
 			 }
 			else {
 				res.send(notFoundError);
@@ -132,16 +140,23 @@ var server = restify.createServer({
     key: fs.readFileSync(config_dir + 'webcontrols.key'),
 	});
 
+server.use(restify.bodyParser()); 
 server.pre(restify.CORS());
 
-server.get('/:module/:command/:args/:password', commandArgs);
-server.head('/:module/:command/:args/:password', commandArgs);
+//server.post('/:module/:command/:args/:password', commandArgs);
+//server.head('/:module/:command/:args/:password', commandArgs);
+server.post( {path : '/:module/:command/', args:'args', password: 'password' }, command);
+
+
 server.get('/:module/:command/:password', command);
 server.head('/:module/:command/:password', command);
-//server.get('/:password', command);
-//server.get('/', command);
+
+server.get('/:password', command);
+server.get('/', command);
 
 //Enable restify web server
+
+//server.listen(port,"localhost", function() {
 server.listen(port, function() {
 	console.log(bootMessage);
 	console.log(config);

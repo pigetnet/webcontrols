@@ -1,0 +1,29 @@
+{
+  "name": "webcontrols",
+  "version": "0.4.0",
+  "description": "Use root commands using a rest interface",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "strip-ansi": "^3.0.1",
+    "restify": "^4.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pigetnet/webcontrols.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi"
+  ],
+  "author": "Rémi Sarrailh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pigetnet/webcontrols/issues"
+  },
+  "homepage": "https://github.com/pigetnet/webcontrols#readme"
+}
